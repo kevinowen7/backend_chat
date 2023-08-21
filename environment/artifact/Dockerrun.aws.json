@@ -1,0 +1,14 @@
+{
+    "AWSEBDockerrunVersion": "1",
+    "Image": {
+        "Name": "<IMAGE_URL>",
+        "Update": "true"
+    },
+    "Ports": [
+        {
+            "ContainerPort": "3000"
+        }
+    ],
+    "volumes": [],
+    "Logging": "/var/log/nginx"
+}

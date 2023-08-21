@@ -1,0 +1,24 @@
+{
+  "name": "Test Backend",
+  "description": "Test Backend",
+  "scripts": {
+    "predeploy": "npm install && npm run build"
+  },
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment [production/development]",
+      "value": "production"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "image": "heroku/nodejs",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
