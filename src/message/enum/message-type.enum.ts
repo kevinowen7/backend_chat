@@ -1,3 +1,5 @@
 export enum MessageType {
-  MESSAGE = 'MESSAGE'
+  MESSAGE = 'MESSAGE',
+  DELETE = 'DELETE',
+  CHANGE_USERNAME = 'CHANGE_USERNAME'
 };

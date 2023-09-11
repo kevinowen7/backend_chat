@@ -46,7 +46,33 @@ export class MessageGateway extends BaseRequestService implements OnGatewayConne
         createMessagePayload.message = payload.body;
         const created = await this.messageService.create(createMessagePayload);
 
+        if (!created) {
+          this.server.sockets.emit("BANNED_USER", { from: payload.from, bannedTime: 5 });
+
+          // TODO: ban user for 5 minutes
+        }
+
         this.server.sockets.emit("RECEIVED_MESSAGE", created);
+        break;
+      case MessageType.DELETE:
+        await this.messageService.delete(payload.body)
+
+        this.server.sockets.emit("RENDER_ROOM", payload.body);
+        break;
+      case MessageType.CHANGE_USERNAME:
+        const data = await this.messageService.updateUsername(payload.from, payload.body)
+
+        if (data.success == 0) {
+          this.server.sockets.emit("CHANGE_USERNAME_FAILED", {
+            from: payload.from,
+            to: payload.body
+          });
+        }
+
+        this.server.sockets.emit("USERNAME_CHANGED", {
+          from: payload.from,
+          to: payload.body
+        });
         break;
       default:
         console.log(`No sources available. with payload type: ${payload.type}`);
